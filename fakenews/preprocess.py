@@ -132,6 +132,7 @@ def run(fakespath, realspath):
     Return:
         2d-list with tokenized news
     """
+    fakenews, realnews = tuple(_fix_paths(fakespath, realspath))
     fakenews, realnews = read_data(fakespath, realspath)
     print('Removing rows without text...')
     remove_missing(realnews, fakenews)
@@ -150,3 +151,9 @@ def run(fakespath, realspath):
     print('Tokenizing data...')
     sentences, labels = _tokenize(database), database['cls']
     return sentences, labels
+
+
+def _fix_paths(*paths):
+    for path in paths:
+        base = os.path.dirname(__file__)
+        yield os.path.join(base, path)
