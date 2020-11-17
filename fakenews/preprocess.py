@@ -8,17 +8,13 @@ import matplotlib.pyplot as plt
 import nltk
 
 
-FAKES_PATH = os.path.abspath('data/Fake.csv')
-REALS_PATH = os.path.abspath('data/True.csv')
-
-
-def read_data():
+def read_data(fakespath, realspath):
     """ Load the real and fake news into memory """
-    fakedata = pd.read_csv(FAKES_PATH)
-    realdata = pd.read_csv(REALS_PATH)
+    fakedata = pd.read_csv(fakespath)
+    realdata = pd.read_csv(realspath)
     print('Succesfully read data from:')
-    print(f'Fakes: {FAKES_PATH}')
-    print(f'Reals: {REALS_PATH}')
+    print(f'Fakes: {fakespath}')
+    print(f'Reals: {realspath}')
     return fakedata, realdata
 
 
@@ -127,9 +123,16 @@ def plot_news_sizes(news, **kwargs):
     plt.close()
 
 
-def run():
-    """ Executes every step neceesary to clean the FakeNew dataset """
-    fakenews, realnews = read_data()
+def run(fakespath, realspath):
+    """ Executes every step neceesary to clean the FakeNew dataset
+    Args:
+        fakespath: absolute path to fake data
+        realspath: absolute path to real data
+
+    Return:
+        2d-list with tokenized news
+    """
+    fakenews, realnews = read_data(fakespath, realspath)
     print('Removing rows without text...')
     remove_missing(realnews, fakenews)
     print('Removing publisher information...')
@@ -139,9 +142,6 @@ def run():
     print('Merging fakes and reals')
     database = pd.concat([fakenews, realnews], ignore_index=True)
     del fakenews, realnews
-
-    # nltk.download('stopwords')
-    # nltk.download('punkt')
 
     print('Merging titles and bodies...')
     _merge_title_and_text(database)
