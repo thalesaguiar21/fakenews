@@ -149,8 +149,8 @@ def run(fakespath, realspath):
     print('Removing subjects and date...')
     _remove_not_text_cols(database)
     print('Tokenizing data...')
-    sentences, labels = _tokenize(database), database['cls']
-    return sentences, labels
+    news, labels = _tokenize(database), database['cls']
+    return news, labels
 
 
 def _fix_paths(*paths):
