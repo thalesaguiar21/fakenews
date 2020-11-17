@@ -1,4 +1,5 @@
 """ Methods for cleaning the FakeNews dataset """
+import os
 import math
 
 import pandas as pd
@@ -6,14 +7,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 import nltk
 
-FAKES_PATH = '~/MEGA/researches/databases/fake-news/Fake.csv'
-REALS_PATH = '~/MEGA/researches/databases/fake-news/True.csv'
+
+FAKES_PATH = os.path.abspath('data/Fake.csv')
+REALS_PATH = os.path.abspath('data/True.csv')
 
 
 def read_data():
     """ Load the real and fake news into memory """
     fakedata = pd.read_csv(FAKES_PATH)
     realdata = pd.read_csv(REALS_PATH)
+    print('Succesfully read data from:')
+    print(f'Fakes: {FAKES_PATH}')
+    print(f'Reals: {REALS_PATH}')
     return fakedata, realdata
 
 
